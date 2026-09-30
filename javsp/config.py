@@ -39,11 +39,20 @@ class CrawlerID(str, Enum):
     arzon = 'arzon'
     arzon_iv = 'arzon_iv'
 
+class JavlibNetwork(BaseConfig):
+    # auto learns a working route; direct/proxy pin JavLibrary's route only.
+    mode: Literal['auto', 'direct', 'proxy'] = 'auto'
+    base_url: Url | None = None
+    discover_mirror: bool = True
+    minimum_interval: float = Field(default=2.0, ge=0, le=60)
+    cooldown: float = Field(default=300.0, ge=1)
+
 class Network(BaseConfig):
     proxy_server: Url | None
     retry: NonNegativeInt = 3
     timeout: Duration
     proxy_free: Dict[CrawlerID, Url]
+    javlib: JavlibNetwork = Field(default_factory=JavlibNetwork)
 
 class CrawlerSelect(BaseConfig):
     def items(self) -> List[tuple[str, list[CrawlerID]]]:

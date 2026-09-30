@@ -36,6 +36,13 @@ network:
   retry: 3
   # https://en.wikipedia.org/wiki/ISO_8601#Durations
   timeout: PT10S
+  # JavLibrary 独立网络设置。auto 优先直连；不会改变其他来源的代理。
+  javlib:
+    mode: auto                 # auto / direct / proxy
+    base_url: null             # 可选：优先使用的镜像；镜像域名会变化
+    discover_mirror: true      # 从官方 GitHub 账号 API 获取最新镜像
+    minimum_interval: 2        # 请求间隔（秒），复用同一路线的 Session
+    cooldown: 300              # 遇到验证页或限流后的冷却时间（秒）
 
 ################################
 crawler:

@@ -134,3 +134,6 @@ ver_hook.py
 
 .idea
 .vscode
+
+# Machine-specific network configuration and probe receipts
+.local/
