@@ -51,12 +51,10 @@ def _get_javbus_urls() -> list:
 
 
 def _get_javlib_urls() -> list:
-    html = get_html('https://github.com/javlibcom')
-    text = html.xpath("//div[@class='p-note user-profile-bio mb-3 js-user-profile-bio f4']")[0].text_content()
-    match = re.search(r'[\w\.]+', text, re.A)
-    if match:
-        domain = f'https://www.{match.group(0)}.com'
-        return [domain]
+    from javsp.web.javlib_network import MIRROR_API, mirror_from_bio
+    response = request_get(MIRROR_API)
+    mirror = mirror_from_bio(response.json().get('bio'))
+    return [mirror] if mirror else []
 
 
 def _get_javdb_urls() -> list:
